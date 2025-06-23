@@ -1,24 +1,24 @@
-output "s3_bucket_name" {
-  value       = aws_s3_bucket.terraform_state.id
-  description = "The NAME of the S3 bucket"
+output "instance_id" {
+  value       = aws_instance.terraform_demo.id
+  description = "The ID of the EC2 instance"
 }
 
-output "s3_bucket_arn" {
-  value       = aws_s3_bucket.terraform_state.arn
-  description = "The ARN of the S3 bucket"
+output "instance_public_ip" {
+  value       = aws_instance.terraform_demo.public_ip
+  description = "The public IP address of the EC2 instance"
 }
 
-output "s3_bucket_region" {
-  value       = aws_s3_bucket.terraform_state.region
-  description = "The REGION of the S3 bucket"
+output "instance_private_ip" {
+  value       = aws_instance.terraform_demo.private_ip
+  description = "The private IP address of the EC2 instance"
 }
 
-output "dynamodb_table_name" {
-  value       = aws_dynamodb_table.terraform_lock.name
-  description = "The ARN of the DynamoDB table"
+output "instance_public_dns" {
+  value       = aws_instance.terraform_demo.public_dns
+  description = "The public DNS name of the EC2 instance"
 }
 
-output "dynamodb_table_arn" {
-  value       = aws_dynamodb_table.terraform_lock.arn
-  description = "The ARN of the DynamoDB table"
+output "instance_ami" {
+  value       = aws_instance.terraform_demo.ami
+  description = "The AMI used to launch the EC2 instance"
 }
