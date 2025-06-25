@@ -1,43 +1,60 @@
-
 # ----------------------------------------------------------------------------------------------------------------------
 # REQUIRE A SPECIFIC TERRAFORM VERSION OR HIGHER
-# This module has been updated with 0.12 syntax, which means it is no longer compatible with any versions below 0.12.
 # ----------------------------------------------------------------------------------------------------------------------
 
 terraform {
   required_version = ">= 0.12"
 }
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------  
 # CONFIGURE OUR AWS CONNECTION
 # ------------------------------------------------------------------------------
 
 provider "aws" {}
 
+# ------------------------------------------------------------------------------  
+# CREATE S3 BUCKET
 # ------------------------------------------------------------------------------
-# CREATE EC2 INSTANCE
-# ------------------------------------------------------------------------------
 
-resource "aws_instance" "example" {
-  ami           = "ami-0c55b159cbfafe1f0"  # Update with a valid AMI ID for your region
-  instance_type = "t2.micro"               # Update instance type as needed
+resource "aws_s3_bucket" "example" {
+  bucket = "terraform-example-bucket-unique123456"  # Replace with a globally unique bucket name
 
-  # Optional: Key pair for SSH access
-  key_name = "your-key-name"               # Replace with your SSH key pair name
-
-  # Optional: Configure security group
-  security_groups = ["default"]
-
-  # Optional: Specify a name for the instance
   tags = {
-    Name = "TerraformExampleInstance"
+    Name        = "TerraformExampleS3Bucket"
+    Environment = "Dev"
   }
 
-  # Optional: Add user_data for initializing the instance on boot
-  user_data = <<-EOT
-              #!/bin/bash
-              echo "Hello from Terraform!" > /var/www/html/index.html
-              systemctl start httpd
-              systemctl enable httpd
-              EOT
+  # Optional: Enable versioning
+  versioning {
+    enabled = true
+  }
+
+  # Optional: Enable server-side encryption
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
+  # Optional: Enable access logging (if needed)
+  # logging {
+  #   target_bucket = "my-log-bucket"
+  #   target_prefix = "log/"
+  # }
+
+  # Optional: Block all public access
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+# ------------------------------------------------------------------------------  
+# OPTIONAL OUTPUTS
+# ------------------------------------------------------------------------------
+
+output "s3_bucket_name" {
+  description = "Name of the created S3 bucket"
+  value       = aws_s3_bucket.example.bucket
 }
