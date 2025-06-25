@@ -1,24 +1,24 @@
-output "instance_id" {
-  value       = aws_instance.terraform_demo.id
-  description = "The ID of the EC2 instance"
+output "bucket_name" {
+  value       = aws_s3_bucket.terraform_demo.bucket
+  description = "The name of the S3 bucket"
 }
 
-output "instance_public_ip" {
-  value       = aws_instance.terraform_demo.public_ip
-  description = "The public IP address of the EC2 instance"
+output "bucket_arn" {
+  value       = aws_s3_bucket.terraform_demo.arn
+  description = "The ARN of the S3 bucket"
 }
 
-output "instance_private_ip" {
-  value       = aws_instance.terraform_demo.private_ip
-  description = "The private IP address of the EC2 instance"
+output "bucket_region" {
+  value       = aws_s3_bucket.terraform_demo.region
+  description = "The AWS region where the S3 bucket is located"
 }
 
-output "instance_public_dns" {
-  value       = aws_instance.terraform_demo.public_dns
-  description = "The public DNS name of the EC2 instance"
+output "bucket_domain_name" {
+  value       = aws_s3_bucket.terraform_demo.bucket_domain_name
+  description = "The domain name of the S3 bucket"
 }
 
-output "instance_ami" {
-  value       = aws_instance.terraform_demo.ami
-  description = "The AMI used to launch the EC2 instance"
+output "bucket_hosted_zone_id" {
+  value       = aws_s3_bucket.terraform_demo.hosted_zone_id
+  description = "The Route 53 hosted zone ID for the S3 bucket"
 }
